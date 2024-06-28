@@ -18,17 +18,19 @@ function App() {
       const API_Key = "2PGW6eB95IWAg08sCY9kSgEssF3UUAwC";
       const locationSearch = await fetch(`http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${API_Key}&q=${city}`);
       const locationKey = await locationSearch.json();
+      console.log(locationKey)
 
       if (!locationKey.length) {
-        throw new Error('City not found');
+        throw new Error('Error : City not found');
       }
 
       setData(locationKey[0]);
       const response = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey[0].Key}?apikey=${API_Key}`);
       const data = await response.json();
+      console.log(data)
 
       if (!data.length) {
-        throw new Error('Weather data not found');
+        throw new Error('Error : Weather data not found');
       }
 
       setWeather(data[0]);
@@ -96,7 +98,7 @@ function App() {
         </button>
         {error && (
           <div className="mt-4 p-4 bg-red-100 rounded-lg text-red-700">
-            {error}
+            <b>{error}</b>
           </div>
         )}
         {weather && (
